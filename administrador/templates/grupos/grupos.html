@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <title>Listado de Grupos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgba(24, 64, 8);
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: white;
+            padding: 20px 0;
+            margin: 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Listado de Grupos</h1>
+    <a href="{% url 'Home' %}" class="btn btn-dark" style="margin-left: 860px;">Cancelar</a><br><br>
+    <table>
+        <thead>
+            <tr>
+                <th>Grupo</th>
+                <th>Usuarios</th>
+                <th>Permisos</th>
+                <th>Accion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for grupo_info in grupos_info %}
+                <tr>
+                    <td>{{ grupo_info.grupo.name }}</td>
+                    <td>
+                        <ul>
+                            {% for usuario in grupo_info.usuarios %}
+                                <li>{{ usuario.username }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            {% for permiso in grupo_info.permisos %}
+                                <li>{{ permiso.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <a href="{% url 'administrador:traerObjetosDeGrupo' grupo_info.grupo.id %}" class="btn btn-warning">Modificar</a>
+                    </td>
+                </tr>
+               
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</html>

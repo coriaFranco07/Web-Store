@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <title>Todos los Productos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgba(24, 64, 8);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin-top: 30px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color:white; /* Cambia el color del texto al azul de Bootstrap */
+            font-size: 36px; /* Aumenta el tamaño del texto para que destaque */
+            text-transform: uppercase; /* Convierte el texto a mayúsculas */
+            font-weight: bold; /* Hace que el texto sea más audaz */
+            letter-spacing: 2px; /* Agrega espacio entre letras para un aspecto elegante */
+        }
+
+        .post-card {
+            border: 1px solid #dcdcdc;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #fff;
+        }
+        .post-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .post-content {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .post-author {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .post-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .post-actions {
+            margin-top: 10px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Todos los Productos</h1>
+        <a href="{% url 'administrador:productoAdd' %}" class="btn btn-info">Agregar Producto</a>
+        <a href="{% url 'Home' %}" class="btn btn-dark">Cancelar</a><br><br>
+        <div class="row">
+            {% for producto in productos %}
+            <div class="col-md-3">
+                <div class="post-card">
+                    <div class="post-title">{{ producto.nombre }}</div>
+                    <div class="post-content">{{ producto.categoria }}</div>
+                    <img src="{{ producto.imagen.url }}" alt="" class="card-img-top img-fluid" style="width: 100%; height: 200px;">
+                    <div class="post-content">{{ producto.precio }}</div>
+                    {% if producto.disponibilidad == 1 %}
+                        <div class="post-content">Disponible</div>
+                    {% else %}
+                        <div class="post-content">No Disponible</div>
+                    {% endif %}
+                    <div class="post-actions">
+                        <a href="{% url 'administrador:productoEdit' producto.id %}" class="btn btn-warning">Editar</a>
+                        <a href="{% url 'administrador:productoDelete' producto.id %}" class="btn btn-danger">Eliminar</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+</html>

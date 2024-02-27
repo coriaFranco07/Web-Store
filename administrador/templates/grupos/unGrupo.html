@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <title>Detalle de Grupo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgba(24, 64, 8);
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: white;
+            padding: 20px 0;
+            margin: 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 30%;
+            margin: 20px auto;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Grupo: {{ grupo.name }}</h1><br>
+    <a href="{% url 'administrador:grupos' %}" class="btn btn-dark" style="margin-left: 860px;">Cancelar</a><br><br>
+    <h2 style="text-align: center; color: white;">Usuarios:</h2>
+    <a href="{% url 'administrador:agregarUsuario' grupo.id %}" class="btn btn-info" style="margin-left: 635px;">Agregar usuario</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre de Usuario</th>
+                <th>Accion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+                <tr>
+                    <td>{{ usuario.username }}</td>
+                    <td>
+                        <a href="{% url 'administrador:eliminarUsuario' grupo.id usuario.id %}" class="btn btn-danger">Eliminar usuario</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table><br>
+
+    <h2 style="text-align: center; color: white;">Permisos:</h2>
+    <a href="{% url 'administrador:agregarPermiso' grupo.id %}" class="btn btn-info" style="margin-left: 635px;">Agregar permiso</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre del Permiso</th>
+                <th>Accion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for permiso in permisos %}
+                <tr>
+                    <td>{{ permiso.name }}</td>
+                    <td>
+                        <a href="{% url 'administrador:eliminarPermiso' grupo.id permiso.id %}" class="btn btn-danger">Eliminar permiso</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</html>
